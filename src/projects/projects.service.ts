@@ -5,6 +5,8 @@ import { Repository } from 'typeorm';
 import { Project, ProjectStatus } from './entities/project.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 
+//um use case representa uma intenção de um usuário
+
 @Injectable()
 export class ProjectsService {
   constructor(
@@ -78,12 +80,14 @@ export class ProjectsService {
       }
 
       if (updateProjectDto.finished_at < project.started_at) {
-        throw new Error('Cannot cancel project before it started');
+        throw new Error('Cannot finish project before it started');
       }
 
       project.finished_at = updateProjectDto.finished_at;
       project.status = ProjectStatus.Completed;
     }
+
+    return this.projectRepo.save(project);
   }
 
   remove(id: string) {

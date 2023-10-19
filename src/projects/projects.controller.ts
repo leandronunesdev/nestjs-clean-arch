@@ -13,6 +13,7 @@ import { UpdateProjectDto } from './dto/update-project.dto';
 
 @Controller('projects')
 export class ProjectsController {
+  //não tem regra de negócio
   constructor(private readonly projectsService: ProjectsService) {}
 
   @Post()
@@ -30,7 +31,7 @@ export class ProjectsController {
     return this.projectsService.findOne(id);
   }
 
-  @Patch(':id')
+  @Patch(':id') //PATCH (parcial) vs PUT (atualização)
   update(@Param('id') id: string, @Body() updateProjectDto: UpdateProjectDto) {
     return this.projectsService.update(id, updateProjectDto);
   }
